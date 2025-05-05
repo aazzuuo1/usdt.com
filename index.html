@@ -141,9 +141,9 @@
 
     const savedEmail = localStorage.getItem('userEmail');
     const savedPass = localStorage.getItem('userPass');
-
-    if (email === savedEmail && pass === savedPass) {
-      location.href = 'home.html';
+if(email === localStorage.getItem('userEmail') && pass === localStorage.getItem('userPass')){
+  location.href = '/rdtdgf/home.html';
+}
     } else {
       alert('بيانات غير صحيحة');
     }
