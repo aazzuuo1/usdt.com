@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>صفحة الإحالات</title>
+  <style>
+    body {
+      background: #100622;
+      color: #fff;
+      font-family: 'Tajawal', sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      margin-bottom: 1rem;
+    }
+    .invite-link {
+      background: #222;
+      padding: 1rem;
+      border-radius: 12px;
+      margin: 1rem auto;
+      width: 90%;
+      max-width: 500px;
+      word-break: break-all;
+    }
+    .count {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      color: #9affdd;
+    }
+    .loading {
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <h1>رابط الدعوة الخاص بك</h1>
+  <div class="invite-link" id="referralLink">جاري التحميل...</div>
+  <div class="count" id="referralCount">عدد الإحالات: جاري التحميل...</div>
+
+  <script>
+    const email = localStorage.getItem('userEmail');
+    if (!email) {
+      document.getElementById('referralLink').innerText = 'يجب تسجيل الدخول أولاً';
+      document.getElementById('referralCount').style.display = 'none';
+    } else {
+      const code = btoa(email);
+      const link = location.origin + location.pathname.replace('referrals.html','') + '?ref=' + code;
+      document.getElementById('referralLink').innerText = link;
+
+      fetch("https://script.google.com/macros/s/AKfycbzeefuZIcNp9Qy9l6OHowNoDOIqnefEO78ffIhhj_Nox3DgudkzT1joWlfPssXjrCC3/exec?action=getReferrals&email=" + email)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('referralCount').innerText = 'عدد الإحالات: ' + data.count;
+        })
+        .catch(() => {
+          document.getElementById('referralCount').innerText = 'تعذر تحميل عدد الإحالات';
+        });
+    }
+  </script>
+</body>
+</html>
