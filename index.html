@@ -120,18 +120,23 @@
   function userExists(){
     return localStorage.getItem('userEmail');
   }
+/* ========== معالجة التسجيل ========= */
+registerForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const email = regEmail.value.trim();
+  const pass1 = regPass.value;
+  const pass2 = regPass2.value;
 
-  /* ========== التسجيل مع نظام الإحالة ========= */
-  registerForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const email = regEmail.value.trim();
-    const pass1 = regPass.value;
-    const pass2 = regPass2.value;
+  if (pass1 !== pass2) {
+    alert('كلمتا المرور غير متطابقتين');
+    return;
+  }
 
-    if(pass1 !== pass2){
-      alert('كلمتا المرور غير متطابقتين');
-      return;
-    }
+  saveUser(email, pass1); // ✅ أضف هذا السطر هنا
+
+  alert('تم التسجيل بنجاح! يمكنك تسجيل الدخول الآن.');
+  switchScreen(true);
+});
 
     // حفظ البيانات محلياً
     saveUser(email, pass1);
